@@ -9,9 +9,9 @@ function About() {
     if(!localStorage.getItem('auth_token'))
     {
       navigate('/login');
-    }
+    }  
 
-  }, [])
+  }, [navigate])
   return (
     <div className='aboutpage'>Working on about page</div>
   )
