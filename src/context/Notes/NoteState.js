@@ -27,9 +27,10 @@ const NoteState = (props) => {
     note.tag = tag;
     note.description = description;
 
-    setNote(notes.concat(note));
-
-    const response = await fetch(`http://localhost:5000/api/notes/createNote`, {
+    try {
+      
+    // eslint-disable-next-line
+    const response = await fetch(`https://note-book-mauve.vercel.app/api/notes/createNote`, {
       method: 'POST',
       headers: {
         'Content-type': 'application/json; charset=UTF-8',
@@ -37,9 +38,14 @@ const NoteState = (props) => {
       },
       body: JSON.stringify({ title, tag, description })
     })
+    setNote(notes.concat(note));
 
     viewNotes();
-    showAlert("success","New Note Added Successfully")
+    showAlert("success", "New Note Added Successfully")
+  } catch (error) {
+    console.log(error);
+   showAlert("danger", "Internal Server Error")
+}
   }
 
   // Edit an Existing Note
@@ -47,9 +53,11 @@ const NoteState = (props) => {
   const editNote = async (props) => {
     const auth_token = localStorage.getItem('auth_token');
 
-    const { _id, title, tag, description } = props;
+    const { _id, title, tag, description,showAlert } = props;
 
-    const response = await fetch(`http://localhost:5000/api/notes/updateNote/${_id}`, {
+    try {
+      
+    const response = await fetch(`https://note-book-mauve.vercel.app/api/notes/updateNote/${_id}`, {
       method: 'PUT',
       headers: {
         'Content-type': 'application/json; charset=UTF-8',
@@ -62,15 +70,20 @@ const NoteState = (props) => {
     console.log(json);
 
     viewNotes();
-    props.showAlert("success","Note Edited Successfully")
+    props.showAlert("success", "Note Edited Successfully")
+  } catch (error) {
+    console.log(error);
+   showAlert("danger", "Internal Server Error")
+}
 
   }
   // View All Notes
   // eslint-disable-next-line
-  const viewNotes = async () => {
-
+  const viewNotes = async (props) => {
+     
+    try{
     const auth_token = localStorage.getItem('auth_token');
-    const response = await fetch('http://localhost:5000/api/notes/getallnotes', {
+    const response = await fetch('https://note-book-mauve.vercel.app/api/notes/getallnotes', {
       method: 'GET',
       headers: {
         'Content-type': 'application/json; charset=UTF-8',
@@ -82,19 +95,24 @@ const NoteState = (props) => {
     console.log(json);
 
     setNote(json.note);
+  } catch (error) {
+    console.log(error);
+   props.showAlert("danger", "Internal Server Error")
+}
 
   }
   // Delete a Note
   // eslint-disable-next-line
   const deleteNote = async (props) => {
-   let {_id, showAlert} = props;
+    let { _id, showAlert } = props;
     const auth_token = localStorage.getItem('auth_token');
     console.log("Deleting note with id:" + _id);
     //Replacing bellow 2 line code with viewNotes() function at line no 83;
     // var remainingNotes = notes.filter((item) =>{return item._id !== _id});
     // setNote(remainingNotes);
-
-    const response = await fetch(`http://localhost:5000/api/notes/deleteNote/${_id}`, {
+    try {
+      
+    const response = await fetch(`https://note-book-mauve.vercel.app/api/notes/deleteNote/${_id}`, {
       method: "DELETE",
       headers: {
         'Content-type': 'application/json; charset=UTF-8',
@@ -104,9 +122,13 @@ const NoteState = (props) => {
     const json = await response.json();
     console.log(json);
     viewNotes();
-    showAlert("success","Note Deleted Successfully")
+    showAlert("success", "Note Deleted Successfully")
+  } catch (error) {
+      console.log(error);
+     showAlert("danger", "Internal Server Error")
   }
-
+  }
+  
 
   return (
     <NoteContext.Provider value={{ notes, setNote, addNewNote, editNote, viewNotes, deleteNote }}>

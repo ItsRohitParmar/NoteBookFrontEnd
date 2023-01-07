@@ -12,7 +12,7 @@ function Login(props) {
     }
     const onSubmit = async (a)=>{
         a.preventDefault();
-        const response = await fetch('http://localhost:5000/api/auth/login',{
+        const response = await fetch('https://note-book-mauve.vercel.app/api/auth/login',{
             method:"POST",
             headers: {
                 'Content-type': 'application/json; charset=UTF-8'
@@ -33,7 +33,7 @@ function Login(props) {
         }
     }
     return (
-        <div className='container my-5'>
+        <div className='container my-3'>
             <form onSubmit={onSubmit}>
                 <div className="mb-3">
                     <label htmlFor="email" className="form-label">Email address</label>

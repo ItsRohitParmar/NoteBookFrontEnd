@@ -12,7 +12,7 @@ function SignUp() {
     }
     const onSubmit = async (a)=>{
         a.preventDefault();
-        const response = await fetch('http://localhost:5000/api/auth/createuser',{
+        const response = await fetch('https://note-book-mauve.vercel.app/api/auth/createuser',{
             method:"POST",
             headers: {
                 'Content-type': 'application/json; charset=UTF-8'
@@ -33,7 +33,7 @@ function SignUp() {
 
     }
   return (
-    <div className='container my-5'>
+    <div className='container my-3'>
             <form onSubmit={onSubmit}>
             <div className="mb-3">
                     <label htmlFor="name" className="form-label">Your Name</label>

@@ -54,38 +54,40 @@ function Notes(props) {
     else
       setDisplay("block");
   }
-
+// eslint-disable-next-line
   useEffect(() => {
     if(localStorage.getItem('auth_token'))
     {
-      viewNotes();
+      viewNotes({showAlert:props.showAlert}); 
+      // eslint-disable-next-line
       setNewNote({ _id: "", title: "", tag: "", description: "" })
     }
     else{
+      // eslint-disable-next-line
       navigate('/login');
     }
-
+// eslint-disable-next-line
   }, [])
 
 
 
   return (
     <>
-      <div className='container my-4' style={{'paddingTop':'40px'}}>
+      <div className='container my-3' style={{'paddingTop':'0px'}}>
         <h2> Add a new note <i className="mx-4 fa-sharp fa-solid fa-plus" onClick={displayForm}></i></h2>
 
-        <form className={`d-${display === 'none' ? "none" : "block"}`}>
+        <form className={`d-${display === 'none' ? "none" : "block"} `}>
           <div className="mb-3">
             <label htmlFor="Title" className="form-label">Title</label>
             <input type="text" className="form-control" required name="title" id="title" onChange={handleOnChange} placeholder='Enter title here...' value={newNote.title} />
-            <label htmlFor="Tag" className="form-label">Tag</label>
-            <input type="text" className="form-control" required name='tag' id="tag" onChange={handleOnChange} placeholder='Enter tag here...' value={newNote.tag} />
+            <label htmlFor="Tag" className="form-label my-1">Tag</label>
+            <input type="text" className="form-control my-1" required name='tag' id="tag" onChange={handleOnChange} placeholder='Enter tag here...' value={newNote.tag} />
           </div>
           <div className="mb-3">
             <label htmlFor="Description" className="form-label">Example textarea</label>
             <textarea className="form-control" required name='description' id="description" value={newNote.description} onChange={handleOnChange} placeholder='Enter decription here...' rows="3"></textarea>
           </div>
-          <button type="submit" disabled={newNote.title.length<5 || newNote.description.length<5} className="btn btn-primary" onClick={handleSubmit}>Add Note</button>
+          <button type="submit" disabled={newNote.title.length<5 || newNote.description.length<5} className="btn btn-primary" onClick={handleSubmit}>Submit</button>
         </form>
       </div>
 
