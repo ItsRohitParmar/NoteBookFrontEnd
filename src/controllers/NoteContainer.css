@@ -1,0 +1,9 @@
+.noteContainer{
+    display: flex;
+    flex-wrap:wrap;
+    justify-content: space-between;
+}
+
+.noteContainer>div{
+    margin: 1vmax;
+}
