@@ -1,6 +1,5 @@
 import React,{useContext} from 'react'
 import noteContext from '../context/Notes/noteContext';
-import Loader from './Loader/Loader';
 function NoteItem(props) {
   
   const {deleteNote} = useContext(noteContext);
