@@ -4,7 +4,7 @@ import {
   Route
 } from "react-router-dom";
 import NoteState from "./context/Notes/NoteState";
-import About from "./controllers/About";
+import About from "./controllers/About/About";
 import Home from "./controllers/Home"
 import Navbar from "./controllers/Navbar";
 import Login from "./controllers/Login"

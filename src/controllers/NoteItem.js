@@ -1,13 +1,13 @@
 import React,{useContext} from 'react'
 import noteContext from '../context/Notes/noteContext';
-
+import Loader from './Loader/Loader';
 function NoteItem(props) {
   
   const {deleteNote} = useContext(noteContext);
-  const {note, onEdit, onDeleteSet} = props
+  const {note, onEdit, onDeleteSet, setLoading} = props
 
   const onDeleteClick = (note)=>{
-    deleteNote({_id:note._id,showAlert:props.showAlert});
+    deleteNote({_id:note._id,showAlert:props.showAlert, setLoading});
     onDeleteSet({ _id: "", title: "", tag: "", description: "" })
   }
 

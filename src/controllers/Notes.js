@@ -1,12 +1,13 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useState, useEffect, Fragment } from 'react'
 import noteContext from '../context/Notes/noteContext'
 import NoteItem from './NoteItem';
 import { useNavigate } from 'react-router-dom';
 import "./NoteContainer.css"
-
+import Loader from "../controllers/Loader/Loader";
 function Notes(props) {
   const context = useContext(noteContext);
 
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
   // eslint-disable-next-line
@@ -25,15 +26,17 @@ function Notes(props) {
     displayForm();
   }
 
-  //On Edit Note/Add Note form submission  
+  //--------------------------- On Edit Note/Add Note form submission --------------------------------  
   const handleSubmit = (s) => {
     s.preventDefault();
     if (newNote._id === "") {
-      addNewNote({ title: newNote.title, tag: newNote.tag, description: newNote.description, showAlert: props.showAlert });
+      addNewNote({ title: newNote.title, tag: newNote.tag, description: newNote.description, showAlert: props.showAlert, setLoading });
+      // after adding new note removing text from form
       setNewNote({ _id: "", title: "", tag: "", description: "" })
     }
     else {
-      editNote({ _id: newNote._id, title: newNote.title, tag: newNote.tag, description: newNote.description, showAlert: props.showAlert })
+      editNote({ _id: newNote._id, title: newNote.title, tag: newNote.tag, description: newNote.description, showAlert: props.showAlert, setLoading })
+      // after adding new note removing text from form
       setNewNote({ _id: "", title: "", tag: "", description: "" })
     }
     displayForm();
@@ -47,7 +50,7 @@ function Notes(props) {
   // State to track the add/edit Note form display state
   const [display, setDisplay] = useState("none")
 
-  // Function to display and hide the add/edit note form
+  // ----------------------- Function to display and hide the add/edit note form ---------------
   const displayForm = () => {
     if (display === 'block') {
       setDisplay("none");
@@ -56,11 +59,13 @@ function Notes(props) {
     else
       setDisplay("block");
   }
+
+
 // eslint-disable-next-line
   useEffect(() => {
-    if(localStorage.getItem('auth_token'))
+    if(localStorage.getItem('auth_token')) 
     {
-      viewNotes({showAlert:props.showAlert}); 
+      viewNotes({showAlert:props.showAlert , setLoading}); 
       // eslint-disable-next-line
       setNewNote({ _id: "", title: "", tag: "", description: "" })
     }
@@ -74,8 +79,10 @@ function Notes(props) {
 
 
   return (
-    <>
-      <div className='container my-3' style={{'paddingTop':'0px'}}>
+    <Fragment>
+      {loading ? <Loader/> :
+      <Fragment>
+        <div className='container my-3' style={{'paddingTop':'0px'}}>
         <h2> Add a new note <i className="mx-4 fa-sharp fa-solid fa-plus" onClick={displayForm}></i></h2>
 
         <form className={`d-${display === 'none' ? "none" : "block"} `}>
@@ -103,10 +110,13 @@ function Notes(props) {
         </div>
         <div className="noteContainer">
         {notes.map((note) => {
-          return <NoteItem key={note._id} onEdit={onEdit} showAlert={props.showAlert} onDeleteSet={setNewNote} note={note} />;
+          return <NoteItem key={note._id} onEdit={onEdit} setLoading={setLoading} showAlert={props.showAlert} onDeleteSet={setNewNote} note={note} />;
         })}
         </div>
-    </>
+      </Fragment>
+      }
+      
+    </Fragment>
   )
 }
 export default Notes

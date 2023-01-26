@@ -9,9 +9,9 @@ const NoteState = (props) => {
 
   const [notes, setNote] = useState([]);
 
-  //Add a New Note
+  //---------------------------------------- Add a New Note ------------------------------------------
   // eslint-disable-next-line
-  const addNewNote = async ({ title, tag, description, showAlert }) => {
+  const addNewNote = async ({ title, tag, description, showAlert, setLoading }) => {
     console.log("adding a new note");
     const note = {
       "_id": "",
@@ -28,7 +28,7 @@ const NoteState = (props) => {
     note.description = description;
 
     try {
-      
+      setLoading(true);
     // eslint-disable-next-line
     const response = await fetch(`https://note-book-mauve.vercel.app/api/notes/createNote`, {
       method: 'POST',
@@ -40,7 +40,8 @@ const NoteState = (props) => {
     })
     setNote(notes.concat(note));
 
-    viewNotes();
+    viewNotes({showAlert, setLoading});
+    setLoading(false);
     showAlert("success", "New Note Added Successfully")
   } catch (error) {
     console.log(error);
@@ -48,7 +49,7 @@ const NoteState = (props) => {
 }
   }
 
-  // Edit an Existing Note
+  //------------------------------- Edit an Existing Note ----------------------------------------------
   // eslint-disable-next-line
   const editNote = async (props) => {
     const auth_token = localStorage.getItem('auth_token');
@@ -56,7 +57,7 @@ const NoteState = (props) => {
     const { _id, title, tag, description,showAlert } = props;
 
     try {
-      
+      props.setLoading(true);
     const response = await fetch(`https://note-book-mauve.vercel.app/api/notes/updateNote/${_id}`, {
       method: 'PUT',
       headers: {
@@ -68,8 +69,9 @@ const NoteState = (props) => {
 
     const json = await response.json();
     console.log(json);
-
-    viewNotes();
+    
+    viewNotes({showAlert, setLoading: props.setLoading});
+    props.setLoading(false);
     props.showAlert("success", "Note Edited Successfully")
   } catch (error) {
     console.log(error);
@@ -77,12 +79,13 @@ const NoteState = (props) => {
 }
 
   }
-  // View All Notes
+  // -------------------------------------- View All Notes -----------------------------------------
   // eslint-disable-next-line
   const viewNotes = async (props) => {
      
     try{
     const auth_token = localStorage.getItem('auth_token');
+    props.setLoading(true);
     const response = await fetch('https://note-book-mauve.vercel.app/api/notes/getallnotes', {
       method: 'GET',
       headers: {
@@ -93,15 +96,15 @@ const NoteState = (props) => {
 
     const json = await response.json();
     console.log(json);
-
+    props.setLoading(false);
     setNote(json.note);
   } catch (error) {
-    console.log(error);
+    console.log(error); 
    props.showAlert("danger", "Internal Server Error")
 }
 
   }
-  // Delete a Note
+  //------------------------------------ Delete a Note -------------------------------------------
   // eslint-disable-next-line
   const deleteNote = async (props) => {
     let { _id, showAlert } = props;
@@ -121,7 +124,7 @@ const NoteState = (props) => {
     })
     const json = await response.json();
     console.log(json);
-    viewNotes();
+    viewNotes({showAlert, setLoading: props.setLoading});
     showAlert("success", "Note Deleted Successfully")
   } catch (error) {
       console.log(error);

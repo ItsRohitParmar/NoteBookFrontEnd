@@ -12,7 +12,7 @@ function SignUp() {
     }
     const onSubmit = async (a)=>{
         a.preventDefault();
-        const response = await fetch('https://note-book-mauve.vercel.app/api/auth/createuser',{
+        const response = await fetch('http://localhost:5000/api/auth/createuser',{
             method:"POST",
             headers: {
                 'Content-type': 'application/json; charset=UTF-8'
@@ -37,7 +37,7 @@ function SignUp() {
             <form onSubmit={onSubmit}>
             <div className="mb-3">
                     <label htmlFor="name" className="form-label">Your Name</label>
-                    <input type="text" required className="form-control" id="name" onChange={onChange} value={credentials.name}  aria-describedby="emailHelp" />
+                    <input type="text" required className="form-control" minLength={3} id="name" onChange={onChange} value={credentials.name}  aria-describedby="emailHelp" />
                 </div>
                 <div className="mb-3">
                     <label htmlFor="email" className="form-label">Email address</label>
@@ -46,7 +46,7 @@ function SignUp() {
                 </div>
                 <div className="mb-3">
                     <label htmlFor="password" className="form-label">Password</label>
-                    <input type="password"minLength={5} required className="form-control" onChange={onChange} value={credentials.password}  id="password" />
+                    <input type="password" minLength={5} required className="form-control" onChange={onChange} value={credentials.password}  id="password" />
                 </div>
                 <div className="mb-3">
                     <label htmlFor="password" className="form-label">Confirm Password</label>
