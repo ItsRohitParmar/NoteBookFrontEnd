@@ -16,7 +16,7 @@ const About = () => {
     <div className='aboutus'>
       <div>
         <h4>Let's Know Something About YourNoteBook</h4>
-        <p>YourNoteBook is build to keep notes of user and provide capability to access it from any device.</p> 
+        <p>YourNoteBook is build to keep notes of users and provide capability to access it from everywhere and on any device.</p> 
         <p>Technology used in this project-</p>
         <p>Frontend - React JS, useContext, Fetch API, Bootstrap 5, HTML5, CSS3, JavaScript.</p>
         <p>Backend - Node JS, Express JS, JWT Token, Bcrypt.</p>
@@ -26,7 +26,7 @@ const About = () => {
       </div>
       <div>
       <div className='projects'>
-        <h5>QuickNews - Webapp using NEWS API</h5> <a target={"blank"} href="https://rohitsnotebook.netlify.app/"><button>View</button></a>
+        <h5>QuickNews - Webapp using NEWS API</h5> <a target={"blank"} href="https://quickindiannews.netlify.app/"><button>View</button></a>
       </div>
 
       <div className='projects'>
