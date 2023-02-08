@@ -52,12 +52,12 @@ const NoteState = (props) => {
   //------------------------------- Edit an Existing Note ----------------------------------------------
   // eslint-disable-next-line
   const editNote = async (props) => {
+    props.setLoading(true);
     const auth_token = localStorage.getItem('auth_token');
 
     const { _id, title, tag, description,showAlert } = props;
 
     try {
-      props.setLoading(true);
     const response = await fetch(`https://note-book-mauve.vercel.app/api/notes/updateNote/${_id}`, {
       method: 'PUT',
       headers: {
@@ -107,6 +107,8 @@ const NoteState = (props) => {
   //------------------------------------ Delete a Note -------------------------------------------
   // eslint-disable-next-line
   const deleteNote = async (props) => {
+
+    props.setLoading(true);
     let { _id, showAlert } = props;
     const auth_token = localStorage.getItem('auth_token');
     console.log("Deleting note with id:" + _id);
@@ -114,7 +116,6 @@ const NoteState = (props) => {
     // var remainingNotes = notes.filter((item) =>{return item._id !== _id});
     // setNote(remainingNotes);
     try {
-      
     const response = await fetch(`https://note-book-mauve.vercel.app/api/notes/deleteNote/${_id}`, {
       method: "DELETE",
       headers: {
@@ -125,7 +126,7 @@ const NoteState = (props) => {
     const json = await response.json();
     console.log(json);
     viewNotes({showAlert, setLoading: props.setLoading});
-    showAlert("success", "Note Deleted Successfully")
+    showAlert("success", "Note Deleted Successfully");
   } catch (error) {
       console.log(error);
      showAlert("danger", "Internal Server Error")

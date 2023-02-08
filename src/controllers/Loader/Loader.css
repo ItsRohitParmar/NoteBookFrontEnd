@@ -1,6 +1,6 @@
 .loader{
     width: 100vw;
-    height: 100vh;
+    height: 70vh;
 
     background-color: white;
     display: grid;
@@ -13,6 +13,7 @@
     height: 10vw;
     border-bottom: 5px solid rgba(0, 0, 0, 0.719);
     border-radius: 50%;
+    
     animation: loadingRotate 800ms linear infinite;
 }
 

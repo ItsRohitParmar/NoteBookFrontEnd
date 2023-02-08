@@ -93,7 +93,7 @@ function Notes(props) {
             <input type="text" className="form-control my-1" required name='tag' id="tag" onChange={handleOnChange} placeholder='Enter tag here...' value={newNote.tag} />
           </div>
           <div className="mb-3">
-            <label htmlFor="Description" className="form-label">Example textarea</label>
+            <label htmlFor="Description" className="form-label">Description</label>
             <textarea className="form-control" required name='description' id="description" value={newNote.description} onChange={handleOnChange} placeholder='Enter decription here...' rows="3"></textarea>
           </div>
           <button type="submit" disabled={newNote.title.length<5 || newNote.description.length<5} className="btn btn-primary" onClick={handleSubmit}>Submit</button>
