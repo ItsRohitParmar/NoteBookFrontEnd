@@ -3,7 +3,7 @@ import {Link, useLocation } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
 
 
-function Navbar() {
+function Navbar({showAlert}) {
 
   var location = useLocation();
 
@@ -12,6 +12,7 @@ function Navbar() {
 
   const handleOnClick = ()=>{
     localStorage.removeItem('auth_token');
+    showAlert("success", "Logged Out Successfully");
     navigate('/login');
   }
   

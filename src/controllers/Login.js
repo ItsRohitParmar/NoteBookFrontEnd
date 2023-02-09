@@ -34,6 +34,7 @@ function Login(props) {
         }
 
         else {
+            setLoading(false);
             props.showAlert("danger", "Invalid Login Details")
         }
     }

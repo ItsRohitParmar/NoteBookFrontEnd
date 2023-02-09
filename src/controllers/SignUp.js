@@ -1,20 +1,30 @@
 import React, { useState, Fragment} from 'react'
 import { useNavigate } from "react-router-dom";
 import Loader from './Loader/Loader';
-function SignUp() {
-
+function SignUp(props) {
+ 
     const [loading, setLoading] = useState(false);
 
 
     const navigate = useNavigate();
-    const [credentials, setCredentials] = useState({ name: "", email: "", password: "" });
+    const [credentials, setCredentials] = useState({ name: "", email: "", password: "", cpassword: "" });
 
 
     const onChange = (e) => {
         setCredentials({ ...credentials, [e.target.id]: e.target.value });
     }
+
+    const onCpasswordChange = (e) => {
+        setCredentials({ ...credentials, [e.target.id]: e.target.value });
+    }
+
     const onSubmit = async (a) => {
         a.preventDefault();
+
+        if(credentials.cpassword !== credentials.password){
+            return alert('Password & Confirm Password Must Be Same');  
+        }
+
         setLoading(true);
 
         const response = await fetch('https://note-book-mauve.vercel.app/api/auth/createuser', {
@@ -27,12 +37,15 @@ function SignUp() {
 
         const json = await response.json();
         console.log(json);
-        if (json.success === true) {
+        if (json.success === true) {    
+            props.showAlert("success", "Account created Successfully.");
+
             localStorage.setItem("auth_token", json.auth_token);
             navigate('/');
         }
 
         else {
+            setLoading(false);
             alert(`${json.message}`)
         }
 
@@ -58,7 +71,7 @@ function SignUp() {
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="password" className="form-label">Confirm Password</label>
-                                <input type="password" minLength={5} required className="form-control" id="cpassword" />
+                                <input type="password" minLength={5} onChange={onCpasswordChange} required className="form-control" id="cpassword" />
                             </div>
                             <button type="submit" className="btn btn-primary">Submit</button>
                         </form>

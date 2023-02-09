@@ -76,25 +76,23 @@ function Notes(props) {
 // eslint-disable-next-line
   }, [])
 
-
-
   return (
     <Fragment>
       {loading ? <Loader/> :
       <Fragment>
         <div className='container my-3' style={{'paddingTop':'0px'}}>
-        <h2> Add a new note <i className="mx-4 fa-sharp fa-solid fa-plus" onClick={displayForm}></i></h2>
+        <h2> Add a new note <i className="mx-4 fa-sharp fa-solid fa-plus" style={{color:"#1c74f6"}} id="plus" onClick={displayForm}></i></h2>
 
         <form className={`d-${display === 'none' ? "none" : "block"} `}>
           <div className="mb-3">
             <label htmlFor="Title" className="form-label">Title</label>
-            <input type="text" className="form-control" required name="title" id="title" onChange={handleOnChange} placeholder='Enter title here...' value={newNote.title} />
+            <input type="text" className="form-control" required name="title" id="title" onChange={handleOnChange} placeholder='Enter title here of minimum 5 length...' value={newNote.title} />
             <label htmlFor="Tag" className="form-label my-1">Tag</label>
             <input type="text" className="form-control my-1" required name='tag' id="tag" onChange={handleOnChange} placeholder='Enter tag here...' value={newNote.tag} />
           </div>
           <div className="mb-3">
             <label htmlFor="Description" className="form-label">Description</label>
-            <textarea className="form-control" required name='description' id="description" value={newNote.description} onChange={handleOnChange} placeholder='Enter decription here...' rows="3"></textarea>
+            <textarea className="form-control" required name='description' id="description" value={newNote.description} onChange={handleOnChange} placeholder='Enter description here of minimum 5 length...' rows="3"></textarea>
           </div>
           <button type="submit" disabled={newNote.title.length<5 || newNote.description.length<5} className="btn btn-primary" onClick={handleSubmit}>Submit</button>
         </form>

@@ -2,14 +2,15 @@ import React,{ useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import "./About.css"
 
-const About = () => {
+const About = ({showAlert}) => {
   const navigate = useNavigate();
   useEffect(() => {
     if(!localStorage.getItem('auth_token'))
     {
+      showAlert("primary", "First Login or SignUp in order to access this web page!")
       navigate('/login');
     }  
-
+// eslint-disable-next-line
   }, [navigate])
 
   return (
